@@ -1,6 +1,6 @@
 package main
 
-import "example.com/service"
+import "github.com/naufalandika/designpattern/service"
 
 func main() {
 	courseType := "webinar"
