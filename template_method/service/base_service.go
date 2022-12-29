@@ -3,13 +3,21 @@ package service
 import "fmt"
 
 type IService interface {
-	GetTestSetQuestion()
+	GetQuestions()
 	SubmitPostTest()
 	postTestValidation()
 	postTestPostSubmission()
 }
 
-func New(i IService) IService {
+func New(ct string) IService {
+	var i IService
+	switch ct {
+	case "webinar":
+		i = NewWebinarService()
+	default:
+		i = nil
+	}
+
 	if i == nil {
 		return &Service{&Service{}}
 	}
@@ -21,7 +29,7 @@ type Service struct {
 	iService IService
 }
 
-func (s *Service) GetTestSetQuestion() {
+func (s *Service) GetQuestions() {
 	s.iService.postTestValidation()
 
 	fmt.Println("get questions")

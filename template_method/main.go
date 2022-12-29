@@ -1,20 +1,31 @@
 package main
 
-import "github.com/naufalandika/designpattern/template_method/service"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"os/signal"
+	"strings"
+
+	"github.com/naufalandika/designpattern/template_method/service"
+)
 
 func main() {
-	courseType := "webinar"
+	reader := bufio.NewReader(os.Stdin)
 
-	var i service.IService
-	switch courseType {
-	case "webinar":
-		i = service.NewWebinarService()
-	default:
-		i = nil
-	}
+	go func() {
+		for {
+			t, _ := reader.ReadString('\n')
+			t = strings.TrimSuffix(t, "\n")
+			svc := service.New(t)
 
-	svc := service.New(i)
+			svc.GetQuestions()
+			fmt.Println()
+			svc.SubmitPostTest()
+		}
+	}()
 
-	svc.GetTestSetQuestion()
-	svc.SubmitPostTest()
+	sigchnl := make(chan os.Signal, 1)
+	signal.Notify(sigchnl, os.Interrupt)
+	<-sigchnl
 }
