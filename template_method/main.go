@@ -1,6 +1,6 @@
 package main
 
-import "github.com/naufalandika/designpattern/service"
+import "github.com/naufalandika/designpattern/template_method/service"
 
 func main() {
 	courseType := "webinar"
