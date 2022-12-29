@@ -13,5 +13,8 @@ func NewService() Service {
 type service struct{}
 
 func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*GetQuestionsResponse, error) {
-	return nil, nil
+	s.coupledFunction()
+	return &GetQuestionsResponse{}, nil
 }
+
+func (s *service) coupledFunction() {}
