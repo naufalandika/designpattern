@@ -31,6 +31,8 @@ func main() {
 			} else {
 				fmt.Println("success: ", resp)
 			}
+
+			fmt.Println()
 		}
 	}()
 

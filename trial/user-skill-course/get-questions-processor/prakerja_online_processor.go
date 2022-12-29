@@ -1,9 +1,12 @@
 package getquestionsprocessor
 
-import "context"
+import (
+	"context"
+	"errors"
+)
 
 type PrakerjaOnlineGetQuestionsProcessor struct{}
 
 func (p *PrakerjaOnlineGetQuestionsProcessor) Validate(ctx context.Context, req *ValidateRequest) error {
-	return nil
+	return errors.New("user progress < 100%")
 }

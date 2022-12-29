@@ -2,7 +2,11 @@ package getquestionsprocessor
 
 import (
 	"context"
-	"time"
+	"fmt"
+)
+
+var (
+	c = 0
 )
 
 type GetQuestionsProcessor interface {
@@ -22,9 +26,27 @@ func GetGetQuestionsProcessor(ctx context.Context, req *GetGetQuestionsProcessor
 }
 
 func getUserType(ctx context.Context) UserType {
-	return (UserType(time.Now().Nanosecond()) % 2)
+	ut := (UserType(c % 2))
+
+	switch ut {
+	case NonPrakerjaUserType:
+		fmt.Println("usertype: Non Prakerja")
+	case PrakerjaUserType:
+		fmt.Println("usertype: Prakerja")
+	}
+
+	c++
+
+	return ut
 }
 
 func getCourseType(req *GetGetQuestionsProcessorRequest) CourseType {
-	return OnlineCourseType
+	ct := OnlineCourseType
+
+	switch ct {
+	case OnlineCourseType:
+		fmt.Println("coursetype: Online")
+	}
+
+	return ct
 }

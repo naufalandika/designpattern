@@ -3,14 +3,14 @@ package getquestionsprocessor
 type UserType int
 
 const (
-	NonPrakerjaUserType = iota
+	NonPrakerjaUserType UserType = iota
 	PrakerjaUserType
 )
 
 type CourseType int
 
 const (
-	OnlineCourseType = iota
+	OnlineCourseType CourseType = iota
 )
 
 type ValidateRequest struct{}
