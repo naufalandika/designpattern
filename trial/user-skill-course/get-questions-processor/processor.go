@@ -28,15 +28,18 @@ func GetProcessor(ctx context.Context, req *GetProcessorRequest) Processor {
 }
 
 func init() {
+	progressRepo := progressgetter.NewProgressRepo()
+	progressGetter := progressgetter.NewProgressGetter(progressRepo)
+
 	prakerjaOnlineProcessor = &PrakerjaOnlineProcessor{
-		progressGetter: progressgetter.New(),
+		progressGetter: progressGetter,
 	}
 
 	prakerjaWebinarProcessor = &PrakerjaWebinarProcessor{
-		progressGetter: progressgetter.New(),
+		progressGetter: progressGetter,
 	}
 
 	baseProcessor = &BaseProcessor{
-		progressGetter: progressgetter.New(),
+		progressGetter: progressGetter,
 	}
 }

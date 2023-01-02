@@ -8,7 +8,7 @@ import (
 )
 
 type BaseProcessor struct {
-	progressGetter progressgetter.ProgressGetter
+	progressGetter progressgetter.IProgressGetter
 }
 
 func (p *BaseProcessor) Validate(ctx context.Context, req *ValidateRequest) error {

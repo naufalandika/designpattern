@@ -8,7 +8,7 @@ import (
 )
 
 type PrakerjaWebinarProcessor struct {
-	progressGetter progressgetter.ProgressGetter
+	progressGetter progressgetter.IProgressGetter
 }
 
 func (p *PrakerjaWebinarProcessor) Validate(ctx context.Context, req *ValidateRequest) error {
