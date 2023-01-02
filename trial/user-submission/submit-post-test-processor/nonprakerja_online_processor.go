@@ -13,5 +13,10 @@ func (p *NonPrakerjaOnlineProcessor) Validate(context.Context, *ValidateRequest)
 }
 
 func (p *NonPrakerjaOnlineProcessor) PostSubmission(context.Context, *PostSubmissionRequest) error {
+	fmt.Println("generate coc")
+	fmt.Println("update uac")
+
+	fmt.Println("generate coe if eligible")
+	fmt.Println("update uac")
 	return nil
 }
