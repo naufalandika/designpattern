@@ -7,5 +7,11 @@ type Service interface {
 }
 
 func NewService() Service {
-	return nil
+	return &service{}
+}
+
+type service struct{}
+
+func (s *service) SubmitPostTest(ctx context.Context, req *SubmitPostTestRequest) (*SubmitPostTestResponse, error) {
+	return nil, nil
 }
