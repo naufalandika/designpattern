@@ -8,11 +8,11 @@ import (
 )
 
 type PrakerjaOnlineProcessor struct {
-	ProgressGetter progressgetter.ProgressGetter
+	progressGetter progressgetter.ProgressGetter
 }
 
 func (p *PrakerjaOnlineProcessor) Validate(ctx context.Context, req *ValidateRequest) error {
-	userProgress, err := p.ProgressGetter.GetProgress(ctx, &progressgetter.GetProgressRequest{})
+	userProgress, err := p.progressGetter.GetProgress(ctx, &progressgetter.GetProgressRequest{})
 	if err != nil {
 		return err
 	}

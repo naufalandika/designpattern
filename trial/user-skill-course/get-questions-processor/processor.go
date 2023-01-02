@@ -29,7 +29,7 @@ func GetProcessor(ctx context.Context, req *GetProcessorRequest) Processor {
 
 func init() {
 	prakerjaOnlineProcessor = &PrakerjaOnlineProcessor{
-		ProgressGetter: progressgetter.New(),
+		progressGetter: progressgetter.New(),
 	}
 
 	prakerjaWebinarProcessor = &PrakerjaWebinarProcessor{}
