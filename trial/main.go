@@ -11,11 +11,15 @@ import (
 	"strings"
 
 	userskillcourse "github.com/naufalandika/designpattern/trial/user-skill-course"
+	usersubmission "github.com/naufalandika/designpattern/trial/user-submission"
 )
 
 var (
-	uscSvc             = userskillcourse.NewService()
-	rgxGetQuestions, _ = regexp.Compile("getquestions/*")
+	uscSvc = userskillcourse.NewService()
+	usSvc  = usersubmission.NewService()
+
+	rgxGetQuestions, _   = regexp.Compile("getquestions/*")
+	rgxSubmitPostTest, _ = regexp.Compile("submit/posttest")
 )
 
 func main() {
@@ -45,6 +49,8 @@ func forwardReq(r string) (interface{}, error) {
 	switch {
 	case rgxGetQuestions.MatchString(r):
 		return uscSvc.GetQuestions(context.Background(), &userskillcourse.GetQuestionsRequest{})
+	case rgxSubmitPostTest.MatchString(r):
+		return usSvc.SubmitPostTest(context.Background(), &usersubmission.SubmitPostTestRequest{})
 	default:
 		return nil, errors.New("unimplemented")
 	}
