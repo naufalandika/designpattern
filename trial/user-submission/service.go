@@ -23,7 +23,9 @@ func (s *service) SubmitPostTest(ctx context.Context, req *SubmitPostTestRequest
 		CourseType: req.CourseType,
 	})
 
-	processor.Validate(ctx, &submitposttestprocessor.ValidateRequest{})
+	if err := processor.Validate(ctx, &submitposttestprocessor.ValidateRequest{}); err != nil {
+		return nil, err
+	}
 
 	fmt.Println("base logic submit post test")
 
