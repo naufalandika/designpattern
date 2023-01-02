@@ -17,3 +17,5 @@ type GetProcessorRequest struct {
 	UserType   string
 	CourseType string
 }
+
+type PostSubmissionRequest struct{}
