@@ -18,10 +18,9 @@ type service struct{}
 
 func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*GetQuestionsResponse, error) {
 	processor := getquestionsprocessor.GetGetQuestionsProcessor(ctx, &getquestionsprocessor.GetGetQuestionsProcessorRequest{})
-	if processor != nil {
-		if err := processor.Validate(ctx, &getquestionsprocessor.ValidateRequest{}); err != nil {
-			return nil, err
-		}
+
+	if err := processor.Validate(ctx, &getquestionsprocessor.ValidateRequest{}); err != nil {
+		return nil, err
 	}
 
 	// base get questions logic here

@@ -20,9 +20,9 @@ func GetGetQuestionsProcessor(ctx context.Context, req *GetGetQuestionsProcessor
 	switch {
 	case ut == PrakerjaUserType && ct == OnlineCourseType:
 		return &PrakerjaOnlineGetQuestionsProcessor{}
+	default:
+		return &BaseProcessor{}
 	}
-
-	return nil
 }
 
 func getUserType(ctx context.Context) UserType {
