@@ -5,9 +5,9 @@ import (
 	"fmt"
 )
 
-type PrakerjaWebinarProcessor struct{}
+type PrakerjaWebinarGetQuestionsProcessor struct{}
 
-func (p *PrakerjaWebinarProcessor) Validate(context.Context, *ValidateRequest) error {
+func (p *PrakerjaWebinarGetQuestionsProcessor) Validate(context.Context, *ValidateRequest) error {
 	fmt.Println("webinar get question validation: progress > 80%")
 	return nil
 }

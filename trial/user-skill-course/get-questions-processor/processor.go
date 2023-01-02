@@ -2,11 +2,6 @@ package getquestionsprocessor
 
 import (
 	"context"
-	"fmt"
-)
-
-var (
-	c = 0
 )
 
 type GetQuestionsProcessor interface {
@@ -14,39 +9,12 @@ type GetQuestionsProcessor interface {
 }
 
 func GetGetQuestionsProcessor(ctx context.Context, req *GetGetQuestionsProcessorRequest) GetQuestionsProcessor {
-	ut := getUserType(ctx)
-	ct := getCourseType(req)
-
 	switch {
-	case ut == PrakerjaUserType && ct == OnlineCourseType:
+	case req.UserType == PrakerjaUserType && req.CourseType == OnlineCourseType:
 		return &PrakerjaOnlineGetQuestionsProcessor{}
+	case req.UserType == PrakerjaUserType && req.CourseType == WebinarCourseType:
+		return &PrakerjaWebinarGetQuestionsProcessor{}
 	default:
 		return &BaseProcessor{}
 	}
-}
-
-func getUserType(ctx context.Context) UserType {
-	ut := (UserType(c % 2))
-
-	switch ut {
-	case NonPrakerjaUserType:
-		fmt.Println("usertype: Non Prakerja")
-	case PrakerjaUserType:
-		fmt.Println("usertype: Prakerja")
-	}
-
-	c++
-
-	return ut
-}
-
-func getCourseType(req *GetGetQuestionsProcessorRequest) CourseType {
-	ct := OnlineCourseType
-
-	switch ct {
-	case OnlineCourseType:
-		fmt.Println("coursetype: Online")
-	}
-
-	return ct
 }

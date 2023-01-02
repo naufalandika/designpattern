@@ -18,8 +18,8 @@ var (
 	uscSvc = userskillcourse.NewService()
 	usSvc  = usersubmission.NewService()
 
-	rgxGetQuestions, _   = regexp.Compile("getquestions/*")
-	rgxSubmitPostTest, _ = regexp.Compile("submit/posttest")
+	rgxGetQuestions, _   = regexp.Compile("getquestions/*/*")
+	rgxSubmitPostTest, _ = regexp.Compile("submitposttest/*/*")
 )
 
 func main() {
@@ -46,12 +46,25 @@ func main() {
 }
 
 func forwardReq(r string) (interface{}, error) {
+	ut, ct := parseReq(r)
+
 	switch {
 	case rgxGetQuestions.MatchString(r):
-		return uscSvc.GetQuestions(context.Background(), &userskillcourse.GetQuestionsRequest{})
+		return uscSvc.GetQuestions(context.Background(), &userskillcourse.GetQuestionsRequest{
+			UserType:   ut,
+			CourseType: ct,
+		})
 	case rgxSubmitPostTest.MatchString(r):
-		return usSvc.SubmitPostTest(context.Background(), &usersubmission.SubmitPostTestRequest{})
+		return usSvc.SubmitPostTest(context.Background(), &usersubmission.SubmitPostTestRequest{
+			UserType:   ut,
+			CourseType: ct,
+		})
 	default:
 		return nil, errors.New("unimplemented")
 	}
+}
+
+func parseReq(r string) (string, string) {
+	arr := strings.Split(r, "/")
+	return arr[1], arr[2]
 }

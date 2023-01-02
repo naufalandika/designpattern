@@ -1,5 +1,8 @@
 package usersubmission
 
-type SubmitPostTestRequest struct{}
+type SubmitPostTestRequest struct {
+	UserType   string
+	CourseType string
+}
 
 type SubmitPostTestResponse struct{}

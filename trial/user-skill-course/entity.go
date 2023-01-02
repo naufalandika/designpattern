@@ -1,5 +1,8 @@
 package userskillcourse
 
-type GetQuestionsRequest struct{}
+type GetQuestionsRequest struct {
+	UserType   string
+	CourseType string
+}
 
 type GetQuestionsResponse struct{}
