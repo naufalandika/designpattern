@@ -17,7 +17,7 @@ func NewService() Service {
 type service struct{}
 
 func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*GetQuestionsResponse, error) {
-	processor := getquestionsprocessor.GetGetQuestionsProcessor(ctx, &getquestionsprocessor.GetGetQuestionsProcessorRequest{
+	processor := getquestionsprocessor.GetProcessor(ctx, &getquestionsprocessor.GetProcessorRequest{
 		UserType:   req.UserType,
 		CourseType: req.CourseType,
 	})

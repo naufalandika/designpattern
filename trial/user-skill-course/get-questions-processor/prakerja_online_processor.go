@@ -5,8 +5,8 @@ import (
 	"errors"
 )
 
-type PrakerjaOnlineGetQuestionsProcessor struct{}
+type PrakerjaOnlineProcessor struct{}
 
-func (p *PrakerjaOnlineGetQuestionsProcessor) Validate(ctx context.Context, req *ValidateRequest) error {
+func (p *PrakerjaOnlineProcessor) Validate(ctx context.Context, req *ValidateRequest) error {
 	return errors.New("user progress < 100%")
 }

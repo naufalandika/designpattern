@@ -12,7 +12,7 @@ const (
 
 type ValidateRequest struct{}
 
-type GetGetQuestionsProcessorRequest struct {
+type GetProcessorRequest struct {
 	UserType   string
 	CourseType string
 }
