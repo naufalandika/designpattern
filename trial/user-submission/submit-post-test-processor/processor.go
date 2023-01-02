@@ -8,5 +8,10 @@ type Processor interface {
 }
 
 func GetProcessor(ctx context.Context, req *GetProcessorRequest) Processor {
-	return &BaseProcessor{}
+	switch {
+	case req.UserType == NonPrakerjaUserType && req.CourseType == OnlineCourseType:
+		return &NonPrakerjaOnlineProcessor{}
+	default:
+		return &BaseProcessor{}
+	}
 }
