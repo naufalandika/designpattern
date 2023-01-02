@@ -32,6 +32,9 @@ func init() {
 		progressGetter: progressgetter.New(),
 	}
 
-	prakerjaWebinarProcessor = &PrakerjaWebinarProcessor{}
+	prakerjaWebinarProcessor = &PrakerjaWebinarProcessor{
+		progressGetter: progressgetter.New(),
+	}
+
 	baseProcessor = &BaseProcessor{}
 }
