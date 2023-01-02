@@ -2,6 +2,8 @@ package getquestionsprocessor
 
 import (
 	"context"
+
+	progressgetter "github.com/naufalandika/designpattern/trial/user-skill-course/progress-getter"
 )
 
 var (
@@ -26,7 +28,10 @@ func GetProcessor(ctx context.Context, req *GetProcessorRequest) Processor {
 }
 
 func init() {
-	prakerjaOnlineProcessor = &PrakerjaOnlineProcessor{}
+	prakerjaOnlineProcessor = &PrakerjaOnlineProcessor{
+		ProgressGetter: progressgetter.New(),
+	}
+
 	prakerjaWebinarProcessor = &PrakerjaWebinarProcessor{}
 	baseProcessor = &BaseProcessor{}
 }
