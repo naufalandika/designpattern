@@ -2,12 +2,24 @@ package getquestionsprocessor
 
 import (
 	"context"
-	"fmt"
+	"errors"
+
+	progressgetter "github.com/naufalandika/designpattern/trial/user-skill-course/progress-getter"
 )
 
-type BaseProcessor struct{}
+type BaseProcessor struct {
+	progressGetter progressgetter.ProgressGetter
+}
 
 func (p *BaseProcessor) Validate(ctx context.Context, req *ValidateRequest) error {
-	fmt.Println("base validation: progress = 100%")
+	userProgress, err := p.progressGetter.GetProgress(ctx, &progressgetter.GetProgressRequest{})
+	if err != nil {
+		return err
+	}
+
+	if userProgress.Progress < 100 {
+		return errors.New("user progress < 100%")
+	}
+
 	return nil
 }

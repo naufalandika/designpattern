@@ -36,5 +36,7 @@ func init() {
 		progressGetter: progressgetter.New(),
 	}
 
-	baseProcessor = &BaseProcessor{}
+	baseProcessor = &BaseProcessor{
+		progressGetter: progressgetter.New(),
+	}
 }
