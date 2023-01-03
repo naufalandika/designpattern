@@ -66,5 +66,10 @@ func forwardReq(r string) (interface{}, error) {
 
 func parseReq(r string) (string, string) {
 	arr := strings.Split(r, "/")
+
+	if len(arr) == 0 {
+		return "", ""
+	}
+
 	return arr[1], arr[2]
 }
