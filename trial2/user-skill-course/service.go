@@ -15,7 +15,9 @@ func NewService() Service {
 type service struct{}
 
 func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*GetQuestionsResponse, error) {
-	if err := s.getQuestionsValidation(ctx, req); err != nil {
+	processor := newGetQuestionsProcessor()
+
+	if err := processor.validate(ctx, &getQuestionsProcessorValidateRequest{}); err != nil {
 		return nil, err
 	}
 
@@ -23,10 +25,6 @@ func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*
 
 	s.coupledFunction()
 	return &GetQuestionsResponse{}, nil
-}
-
-func (s *service) getQuestionsValidation(ctx context.Context, req *GetQuestionsRequest) error {
-	return nil
 }
 
 func (s *service) coupledFunction() {}
