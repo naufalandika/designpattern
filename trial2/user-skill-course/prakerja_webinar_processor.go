@@ -4,17 +4,20 @@ import (
 	"context"
 	"errors"
 
-	"github.com/naufalandika/designpattern/trial2/pb/accomplishment"
+	"github.com/naufalandika/designpattern/trial2/progress"
 )
 
 type prakerjaWebinarProcessor struct {
-	accomplishment *accomplishment.Accomplishment
+	progress progress.Progress
 }
 
-func (p *prakerjaWebinarProcessor) validateGetQuestionsProgress(context.Context, *validateGetQuestionsProgressRequest) error {
-	progress := p.accomplishment.GetUserProgress()
+func (p *prakerjaWebinarProcessor) validateGetQuestionsProgress(ctx context.Context, req *validateGetQuestionsProgressRequest) error {
+	progress, err := p.progress.Get(ctx, &progress.GetRequest{})
+	if err != nil {
+		return err
+	}
 
-	if progress < 80 {
+	if progress.UserProgress < 80 {
 		return errors.New("user progress < 80")
 	}
 
