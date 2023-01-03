@@ -2,7 +2,6 @@ package userskillcourse
 
 import (
 	"context"
-	"errors"
 
 	"github.com/naufalandika/designpattern/trial2/pb/accomplishment"
 	"github.com/naufalandika/designpattern/trial2/pb/exercise"
@@ -25,7 +24,9 @@ type service struct {
 }
 
 func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*GetQuestionsResponse, error) {
-	if err := s.validateGetQuestionsProgress(ctx, req); err != nil {
+	processor := getProcessor(&getProcessorRequest{})
+
+	if err := processor.validateGetQuestionsProgress(ctx, &validateGetQuestionsProgressRequest{}); err != nil {
 		return nil, err
 	}
 
@@ -33,16 +34,6 @@ func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*
 
 	s.coupledFunction()
 	return &GetQuestionsResponse{}, nil
-}
-
-func (s *service) validateGetQuestionsProgress(ctx context.Context, req *GetQuestionsRequest) error {
-	progress := s.accomplishment.GetUserProgress()
-
-	if progress < 100 {
-		return errors.New("user progress < 100")
-	}
-
-	return nil
 }
 
 func (s *service) coupledFunction() {}
