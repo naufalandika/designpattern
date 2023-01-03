@@ -1,6 +1,10 @@
 package userskillcourse
 
-import "context"
+import (
+	"context"
+
+	"github.com/naufalandika/designpattern/trial2/pb/accomplishment"
+)
 
 type validateGetQuestionsProgressRequest struct{}
 
@@ -14,5 +18,11 @@ type getProcessorRequest struct {
 }
 
 func getProcessor(req *getProcessorRequest) iProcessor {
-	return &nonprakerjaOnlineProcessor{}
+	accomplishment := accomplishment.New()
+
+	if req.userType == "prakerja" && req.courseType == "webinar" {
+		return &prakerjaWebinarProcessor{accomplishment: accomplishment}
+	}
+
+	return &nonprakerjaOnlineProcessor{accomplishment: accomplishment}
 }
