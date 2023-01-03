@@ -5,18 +5,23 @@ import (
 	"errors"
 
 	"github.com/naufalandika/designpattern/trial2/pb/accomplishment"
+	"github.com/naufalandika/designpattern/trial2/pb/exercise"
 )
 
 type Service interface {
 	GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*GetQuestionsResponse, error)
 }
 
-func NewService(accomplishment *accomplishment.Accomplishment) Service {
-	return &service{accomplishment}
+func NewService(accomplishment *accomplishment.Accomplishment, exercise *exercise.Exercise) Service {
+	return &service{
+		accomplishment: accomplishment,
+		exercise:       exercise,
+	}
 }
 
 type service struct {
 	accomplishment *accomplishment.Accomplishment
+	exercise       *exercise.Exercise
 }
 
 func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*GetQuestionsResponse, error) {
@@ -24,7 +29,7 @@ func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*
 		return nil, err
 	}
 
-	// base get questions logic here
+	s.exercise.GetQuestions()
 
 	s.coupledFunction()
 	return &GetQuestionsResponse{}, nil

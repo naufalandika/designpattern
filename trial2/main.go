@@ -18,7 +18,7 @@ import (
 )
 
 var (
-	uscSvc = userskillcourse.NewService(accomplishment.New())
+	uscSvc = userskillcourse.NewService(accomplishment.New(), exercise.New())
 	usSvc  = usersubmission.NewService(accomplishment.New(), certificate.New(), exercise.New())
 
 	rgxGetQuestions, _   = regexp.Compile("getquestions/*/*")
