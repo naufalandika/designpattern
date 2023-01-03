@@ -2,34 +2,55 @@ package usersubmission
 
 import (
 	"context"
-	"fmt"
+	"errors"
 
-	submitposttestprocessor "github.com/naufalandika/designpattern/trial2/user-submission/submit-post-test-processor"
+	"github.com/naufalandika/designpattern/trial2/pb/accomplishment"
+	"github.com/naufalandika/designpattern/trial2/pb/certificate"
+	"github.com/naufalandika/designpattern/trial2/pb/exercise"
 )
 
 type Service interface {
 	SubmitPostTest(context.Context, *SubmitPostTestRequest) (*SubmitPostTestResponse, error)
 }
 
-func NewService() Service {
-	return &service{}
+func NewService(accomplishment *accomplishment.Accomplishment, certificate *certificate.Certificate, exercise *exercise.Exercise) Service {
+	return &service{
+		accomplishment: accomplishment,
+		certificate:    certificate,
+		exercise:       exercise,
+	}
 }
 
-type service struct{}
+type service struct {
+	accomplishment *accomplishment.Accomplishment
+	certificate    *certificate.Certificate
+	exercise       *exercise.Exercise
+}
 
 func (s *service) SubmitPostTest(ctx context.Context, req *SubmitPostTestRequest) (*SubmitPostTestResponse, error) {
-	processor := submitposttestprocessor.GetProcessor(ctx, &submitposttestprocessor.GetProcessorRequest{
-		UserType:   req.UserType,
-		CourseType: req.CourseType,
-	})
-
-	if err := processor.Validate(ctx, &submitposttestprocessor.ValidateRequest{}); err != nil {
+	if err := s.validateSubmitPostTestProgress(ctx, req); err != nil {
 		return nil, err
 	}
 
-	fmt.Println("base logic submit post test")
+	score := s.exercise.Submit()
 
-	go processor.PostSubmission(ctx, &submitposttestprocessor.PostSubmissionRequest{})
+	if score > 60 {
+		s.generateCertificate()
+	}
 
 	return nil, nil
+}
+
+func (s *service) validateSubmitPostTestProgress(ctx context.Context, req *SubmitPostTestRequest) error {
+	progress := s.accomplishment.GetUserProgress()
+
+	if progress < 100 {
+		return errors.New("user progress < 100")
+	}
+
+	return nil
+}
+
+func (s *service) generateCertificate() {
+	s.certificate.Generate()
 }

@@ -11,13 +11,15 @@ import (
 	"strings"
 
 	"github.com/naufalandika/designpattern/trial2/pb/accomplishment"
+	"github.com/naufalandika/designpattern/trial2/pb/certificate"
+	"github.com/naufalandika/designpattern/trial2/pb/exercise"
 	userskillcourse "github.com/naufalandika/designpattern/trial2/user-skill-course"
 	usersubmission "github.com/naufalandika/designpattern/trial2/user-submission"
 )
 
 var (
 	uscSvc = userskillcourse.NewService(accomplishment.New())
-	usSvc  = usersubmission.NewService()
+	usSvc  = usersubmission.NewService(accomplishment.New(), certificate.New(), exercise.New())
 
 	rgxGetQuestions, _   = regexp.Compile("getquestions/*/*")
 	rgxSubmitPostTest, _ = regexp.Compile("submitposttest/*/*")

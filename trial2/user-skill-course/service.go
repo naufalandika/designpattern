@@ -20,7 +20,7 @@ type service struct {
 }
 
 func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*GetQuestionsResponse, error) {
-	if err := s.validateGetQuestions(ctx, req); err != nil {
+	if err := s.validateGetQuestionsProgress(ctx, req); err != nil {
 		return nil, err
 	}
 
@@ -30,7 +30,7 @@ func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*
 	return &GetQuestionsResponse{}, nil
 }
 
-func (s *service) validateGetQuestions(ctx context.Context, req *GetQuestionsRequest) error {
+func (s *service) validateGetQuestionsProgress(ctx context.Context, req *GetQuestionsRequest) error {
 	progress := s.accomplishment.GetUserProgress()
 
 	if progress < 100 {
