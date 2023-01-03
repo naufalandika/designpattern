@@ -4,18 +4,21 @@ import (
 	"context"
 	"errors"
 
-	"github.com/naufalandika/designpattern/trial2/pb/accomplishment"
+	"github.com/naufalandika/designpattern/trial2/progress"
 )
 
 type nonprakerjaOnlineProcessor struct {
-	accomplishment *accomplishment.Accomplishment
+	progress progress.Progress
 }
 
 func (p *nonprakerjaOnlineProcessor) validateGetQuestionsProgress(ctx context.Context, req *validateGetQuestionsProgressRequest) error {
-	progress := p.accomplishment.GetUserProgress()
+	progress, err := p.progress.Get(ctx, &progress.GetRequest{})
+	if err != nil {
+		return err
+	}
 
-	if progress < 100 {
-		return errors.New("user progress < 100")
+	if progress.UserProgress < 100 {
+		return errors.New("user progress < 80")
 	}
 
 	return nil

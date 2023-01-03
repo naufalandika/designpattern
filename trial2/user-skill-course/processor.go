@@ -26,5 +26,5 @@ func getProcessor(req *getProcessorRequest) iProcessor {
 		return &prakerjaWebinarProcessor{progress: progress}
 	}
 
-	return &nonprakerjaOnlineProcessor{accomplishment: accomplishment}
+	return &nonprakerjaOnlineProcessor{progress: progress}
 }
