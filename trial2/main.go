@@ -10,12 +10,13 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/naufalandika/designpattern/trial2/pb/accomplishment"
 	userskillcourse "github.com/naufalandika/designpattern/trial2/user-skill-course"
 	usersubmission "github.com/naufalandika/designpattern/trial2/user-submission"
 )
 
 var (
-	uscSvc = userskillcourse.NewService()
+	uscSvc = userskillcourse.NewService(accomplishment.New())
 	usSvc  = usersubmission.NewService()
 
 	rgxGetQuestions, _   = regexp.Compile("getquestions/*/*")
