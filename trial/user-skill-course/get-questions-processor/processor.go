@@ -2,6 +2,14 @@ package getquestionsprocessor
 
 import (
 	"context"
+
+	progressgetter "github.com/naufalandika/designpattern/trial/user-skill-course/progress-getter"
+)
+
+var (
+	prakerjaOnlineProcessor  *PrakerjaOnlineProcessor
+	prakerjaWebinarProcessor *PrakerjaWebinarProcessor
+	baseProcessor            *BaseProcessor
 )
 
 type Processor interface {
@@ -11,10 +19,27 @@ type Processor interface {
 func GetProcessor(ctx context.Context, req *GetProcessorRequest) Processor {
 	switch {
 	case req.UserType == PrakerjaUserType && req.CourseType == OnlineCourseType:
-		return &PrakerjaOnlineProcessor{}
+		return prakerjaOnlineProcessor
 	case req.UserType == PrakerjaUserType && req.CourseType == WebinarCourseType:
-		return &PrakerjaWebinarProcessor{}
+		return prakerjaWebinarProcessor
 	default:
-		return &BaseProcessor{}
+		return baseProcessor
+	}
+}
+
+func init() {
+	progressRepo := progressgetter.NewProgressRepo()
+	progressGetter := progressgetter.NewProgressGetter(progressRepo)
+
+	prakerjaOnlineProcessor = &PrakerjaOnlineProcessor{
+		progressGetter: progressGetter,
+	}
+
+	prakerjaWebinarProcessor = &PrakerjaWebinarProcessor{
+		progressGetter: progressGetter,
+	}
+
+	baseProcessor = &BaseProcessor{
+		progressGetter: progressGetter,
 	}
 }

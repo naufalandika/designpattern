@@ -2,12 +2,24 @@ package getquestionsprocessor
 
 import (
 	"context"
-	"fmt"
+	"errors"
+
+	progressgetter "github.com/naufalandika/designpattern/trial/user-skill-course/progress-getter"
 )
 
-type PrakerjaWebinarProcessor struct{}
+type PrakerjaWebinarProcessor struct {
+	progressGetter progressgetter.IProgressGetter
+}
 
-func (p *PrakerjaWebinarProcessor) Validate(context.Context, *ValidateRequest) error {
-	fmt.Println("webinar get question validation: progress > 80%")
+func (p *PrakerjaWebinarProcessor) Validate(ctx context.Context, req *ValidateRequest) error {
+	userProgress, err := p.progressGetter.GetProgress(ctx, &progressgetter.GetProgressRequest{})
+	if err != nil {
+		return err
+	}
+
+	if userProgress.Progress < 80 {
+		return errors.New("user progress < 80%")
+	}
+
 	return nil
 }
