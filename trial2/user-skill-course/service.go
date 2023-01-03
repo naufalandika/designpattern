@@ -2,8 +2,6 @@ package userskillcourse
 
 import (
 	"context"
-
-	getquestionsprocessor "github.com/naufalandika/designpattern/trial2/user-skill-course/get-questions-processor"
 )
 
 type Service interface {
@@ -17,12 +15,7 @@ func NewService() Service {
 type service struct{}
 
 func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*GetQuestionsResponse, error) {
-	processor := getquestionsprocessor.GetProcessor(ctx, &getquestionsprocessor.GetProcessorRequest{
-		UserType:   req.UserType,
-		CourseType: req.CourseType,
-	})
-
-	if err := processor.Validate(ctx, &getquestionsprocessor.ValidateRequest{}); err != nil {
+	if err := s.getQuestionsValidation(ctx, req); err != nil {
 		return nil, err
 	}
 
@@ -30,6 +23,10 @@ func (s *service) GetQuestions(ctx context.Context, req *GetQuestionsRequest) (*
 
 	s.coupledFunction()
 	return &GetQuestionsResponse{}, nil
+}
+
+func (s *service) getQuestionsValidation(ctx context.Context, req *GetQuestionsRequest) error {
+	return nil
 }
 
 func (s *service) coupledFunction() {}
